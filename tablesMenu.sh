@@ -11,7 +11,7 @@ tables_menu(){
             "Delete Table") . ./deleteTable.sh;;
             "Update Table") . ./updateTable.sh;;
             "Display Table") . ./displayTable.sh;;
-            "Return To Main Menu") break;;
+            "Return To Main Menu") . ./DBMenu.sh;;
             *) echo "Invalid option $REPLY";;
         esac
     done
