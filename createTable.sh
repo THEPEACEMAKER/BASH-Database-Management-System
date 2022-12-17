@@ -22,7 +22,7 @@ function createTableFiles(){
     if touch "$currDB/$tableName.idb" 2>> log.out; then
         echo "Data table created sucessfully." >> log.out;
         # create tableName.frm
-        if touch "$currDB/$tableName.frm" 2>> log.out; then
+        if touch "$currDB/.$tableName.frm" 2>> log.out; then
             echo "Format file created sucessfully." >> log.out;
         else
             echo "Falied to create the format file. Check log.out for more details.";
@@ -87,7 +87,7 @@ function createColumns(){
     done
 }
 
-currDB="Databases/iti"    # for easy access # for development # now you can run ./createTable.sh directly to add into iti
+# currDB="Databases/iti"    # for easy access # for development # now you can run ./createTable.sh directly to add into iti
 
 # main
 if test -f $currDB/$tableName 2> log.out; then
@@ -99,6 +99,6 @@ else
         echo "$tableName table is created sucessfully";
 
         echo ""
-        ./DBMenu.sh
+        ./tablesMenu.sh
     fi
 fi
