@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# [TO-DO: use only one validation function ]
+
 read -p "Enter table name: " tableName;
 
 # Validate the entered name
@@ -34,11 +36,69 @@ function createTableFiles(){
     echo $success;
 }
 
+function createColumns(){
+	currDB=$1;
+    tableName=$2;
+
+    read -p "Enter number of columns: " numCols;
+
+    for (( i=0; i<$numCols; i++ ))
+    do
+        colMetadata="";
+        read -p "Enter column name: " colName;
+
+        # Validate the entered column name
+        while ! [[ $colName =~ ^([a-zA-Z])[a-zA-Z0-9\w_-]*([a-zA-Z0-9])$ ]]; do
+            echo "$colName is not a valid name";
+            echo "column names should not have any special characters, spaces, doesn't start with a number or end with a '-' or '_'";
+            echo ""
+            read -p "Enter column name: " colName;
+        done
+
+        colMetadata="$colName";
+
+        # select column datatype (string, number)
+        while [ true ]; do
+            read -p "Choose column's datatype String(s) Number(n): (s/n)" colDataType;
+            case "$colDataType" in
+                "s" | "S" ) colMetadata="$colMetadata:string"
+                            break;;
+                "n" | "N" ) colMetadata="$colMetadata:number"
+                            break;;
+                * ) echo "Invalid option $REPLY";;
+            esac
+        done
+
+        # Is it Primary-Key (PK): (y/n):
+        while [ true ]; do
+            read -p "Is it Primary-Key (PK): (y/n)" pk;
+            case "$pk" in
+                "y" | "Y" ) colMetadata="$colMetadata:yes"
+                            break;;
+                "n" | "N" ) colMetadata="$colMetadata:no"
+                            break;;
+                * ) echo "Invalid option $REPLY";;
+            esac
+        done
+
+        # create row containing column-info in table.frm (colName:dataType:PK)
+        echo $colMetadata >> "$currDB/$tableName.frm";
+        echo "Column format added $colMetadata" >> log.out;
+    done
+}
+
+currDB="Databases/iti"    # for easy access # for development # now you can run ./createTable.sh directly to add into iti
+
 # main
 if test -f $currDB/$tableName 2> log.out; then
 	echo "Table already exists. Check log.out for more details.";
 else
     if [ $(createTableFiles "$currDB" "$tableName")  == 0 ]; then
-    	echo "Table files created successfully" >> log.out;
+        createColumns "$currDB" "$tableName"
+        echo ""
+        echo "$tableName table is created sucessfully";
+
+        echo ""
+        ./DBMenu.sh
     fi
 fi
