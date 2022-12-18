@@ -21,7 +21,7 @@ function createTableFiles(){
     # create tableName.idb
     if touch "$currDB/$tableName.idb" 2>> log.out; then
         echo "Data table created sucessfully." >> log.out;
-        # create tableName.frm
+        # create .tableName.frm
         if touch "$currDB/.$tableName.frm" 2>> log.out; then
             echo "Format file created sucessfully." >> log.out;
         else
@@ -82,7 +82,7 @@ function createColumns(){
         done
 
         # create row containing column-info in table.frm (colName:dataType:PK)
-        echo $colMetadata >> "$currDB/$tableName.frm";
+        echo $colMetadata >> "$currDB/.$tableName.frm";
         echo "Column format added $colMetadata" >> log.out;
     done
 }
