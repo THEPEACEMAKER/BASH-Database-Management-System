@@ -3,11 +3,12 @@
 echo "-------$tableName-------";
 echo "------------------------";
 
-options=("Insert" "Select" "Update" "Delete" "Return To Previous Menu");
+options=("Display Table" "Insert" "Select" "Update" "Delete" "Return To Previous Menu");
 
 select option in "${options[@]}"
 do
     case $option in
+        "Display Table") . ./displayTable.sh;;
         "Insert") . ./insert.sh;;
         "Select") echo "Select";;
         "Update") echo "Update";;
