@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "-------$tableName-------";
-echo "--------SELECT--------";
+echo "--------SELECT----------";
 
 options=("All" "Column" "By Column" "Return To Previous Menu");
 
