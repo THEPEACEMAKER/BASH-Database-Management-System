@@ -7,8 +7,8 @@
 tableData="$currDB/$tableName.idb"
 tableFormat="$currDB/.$tableName.frm"
 
-columns=()
-dataTypes=()
+columns=();
+dataTypes=();
 
 # get column names and dataTypes
 read -d '\n' -r -a lines < "$tableFormat"
@@ -38,6 +38,24 @@ do
     echo "-------------";
     echo "Column: $column, Data Type: $colDataType"
 
+    operator="";
+    operatorOptions=("==" "<" ">" "<=" ">=");
+
+    while [ true ]; do
+        select option in "${operatorOptions[@]}"
+        do
+        	if ! [[ "\?" =~ "${option}" ]]; then # valid option
+        	    operator=$option;
+        	    break 2;
+        	else 	# # not a valid option
+        		echo "You need to choose one of the options";
+        	fi
+        done
+    done
+
+    clear -x;
+    echo "-------$colname $operator ------";
+
     #read new value from user
     read -p "Enter $colname: " value;
 
@@ -61,8 +79,23 @@ do
     fi
 
     clear -x;
-	echo "-----------query Results----------";
-	awk -v i="$colIndex" -v v=$value -F':' '{if ($i == v) print $0;}' $tableData # display the rows that have the queried value
+	echo "-----------query Results----------"; # display the rows that have the queried value
+	if [[ $operator = "==" ]]; then
+        echo "------------ $colname $operator $value ------------";
+        awk -v i="$colIndex" -v v=$value -F':' '{if ($i == v) print $0;}' $tableData;
+    elif [[ $operator = "<" ]]; then
+    	echo "------------ $colname $operator $value ------------";
+    	awk -v i="$colIndex" -v v=$value -F':' '{if ($i < v) print $0;}' $tableData;
+    elif [[ $operator = ">" ]]; then
+    	echo "------------ $colname $operator $value ------------";
+    	awk -v i="$colIndex" -v v=$value -F':' '{if ($i > v) print $0;}' $tableData;
+    elif [[ $operator = "<=" ]]; then
+    	echo "------------ $colname $operator $value ------------";
+    	awk -v i="$colIndex" -v v=$value -F':' '{if ($i <= v) print $0;}' $tableData;
+    elif [[ $operator = ">=" ]]; then
+    	echo "------------ $colname $operator $value ------------";
+    	awk -v i="$colIndex" -v v=$value -F':' '{if ($i >= v) print $0;}' $tableData;
+    fi
 
 	break;
 done
