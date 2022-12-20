@@ -10,7 +10,7 @@ do
     case $option in
         "Display Table") . ./displayTable.sh;;
         "Insert") . ./insert.sh;;
-        "Select") echo "Select";;
+        "Select") . ./select.sh;;
         "Update") echo "Update";;
         "Delete") echo "Delete";;
         "Return To Previous Menu") . ./tablesMenu.sh;;

@@ -40,7 +40,7 @@ do
 
     # validate if PK
     if [[ $PK == "yes" ]]; then
-        # get all column data from Data/tableName
+        # get all column data from tableData
         read -d '' -r -a dataLines < "$tableData"  # all table
         
         #loop over column data to check pk if unique
