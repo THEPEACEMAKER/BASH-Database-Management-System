@@ -66,7 +66,18 @@ while [ true ]; do
         done
     fi
 
-    break 2;    
+    read -d '' -r -a dataLines < "$tableData"  # all table
+    #loop over column data to check pk if unique
+    for j in "${!dataLines[@]}";
+    do
+        IFS=':' read -r -a record <<< "${dataLines[$j]}"; # record(row)
+
+        if [[ ${record[$((colIndex-1))]} == $value ]]; then
+         # echo "Matched Records";
+         break 3;
+        fi
+    done
+    echo "No Matched Records, press Enter to select again";
   done
 done
 
