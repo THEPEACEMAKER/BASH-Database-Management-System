@@ -9,18 +9,19 @@ while ! [[ $newDB =~ ^([a-zA-Z])[a-zA-Z0-9\w_-]*([a-zA-Z0-9])$ ]]; do
     read -p "Enter database name: " newDB;
 done
 
+
 if test -d Databases/$newDB; then
+    echo "";
     echo "This database already exists!";
-    echo ""
-    ./DBMenu.sh
+    . ./createDB.sh
 else
     if mkdir -p Databases/$newDB 2>> log.out; then
         echo "$newDB database created succesfully";
         echo ""
-        ./DBMenu.sh
+        . ./DBMenu.sh
     else
         echo "Falied to create $newDB. Refer to log.out for more details."
         echo ""
-        ./DBMenu.sh
+        . ./createDB.sh
     fi
 fi
