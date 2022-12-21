@@ -70,16 +70,22 @@ function createColumns(){
         done
 
         # Is it Primary-Key (PK): (y/n):
-        while [ true ]; do
-            read -rp "Is it Primary-Key (PK): (y/n)" pk;
-            case "$pk" in
-                "y" | "Y" ) colMetadata="$colMetadata:yes"
-                            break;;
-                "n" | "N" ) colMetadata="$colMetadata:no"
-                            break;;
-                * ) echo "Invalid option $REPLY";;
-            esac
-        done
+
+        if ! [[ $pkFlag ]]; then
+            while [ true ]; do
+                read -rp "Is it Primary-Key (PK): (y/n)" pk;
+                case "$pk" in
+                    "y" | "Y" ) colMetadata="$colMetadata:yes"
+                                pkFlag=1;
+                                break;;
+                    "n" | "N" ) colMetadata="$colMetadata:no"
+                                break;;
+                    * ) echo "Invalid option $REPLY";;
+                esac
+            done
+        else
+            colMetadata="$colMetadata:no"
+        fi
 
         # create row containing column-info in table.frm (colName:dataType:PK)
         echo $colMetadata >> "$currDB/.$tableName.frm";
