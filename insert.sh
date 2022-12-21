@@ -20,41 +20,45 @@ do
     dataType=${column[1]};
     PK=${column[2]};
 
-    #read new column value from user
-    read -rp "Enter $name: " value;
-    
-    # validate the new value type
-    if [[ $dataType == "number" ]]; then
-        while ! [[ $value =~ ^[0-9]+$ ]]; do
-            echo "$name must be a number.";
-            echo ""
-            read -rp "Enter $name: " value;
-        done
-    elif [[ $dataType == "string" ]]; then
-        while ! [[ $value =~ ^[a-zA-Z]+$ ]]; do
-            echo "$name must be a string.";
-            echo ""
-            read -rp "Enter $name: " value;
-        done
-    fi
-
-    # validate if PK
-    if [[ $PK == "yes" ]]; then
-        # get all column data from tableData
-        read -d '' -r -a dataLines < "$tableData"  # all table
-        
-        #loop over column data to check pk if unique
-        for j in "${!dataLines[@]}";
-        do
-            IFS=':' read -r -a record <<< "${dataLines[$j]}"; # record(row)
-            while [[ ${record[i]} == $value ]]; do
-                echo "$name is a primary key and must be unique.";
+    function validateValue(){
+        # validate the new value type
+        if [[ $dataType == "number" ]]; then
+            while ! [[ $value =~ ^[0-9]+$ ]]; do
+                echo "$name must be a number.";
                 echo ""
                 read -rp "Enter $name: " value;
             done
-        done
-    fi
+        elif [[ $dataType == "string" ]]; then
+            while ! [[ $value =~ ^[a-zA-Z]+$ ]]; do
+                echo "$name must be a string.";
+                echo ""
+                read -rp "Enter $name: " value;
+            done
+        fi
 
+        # validate if PK
+        if [[ $PK == "yes" ]]; then
+            # get all column data from tableData
+            read -d '' -r -a dataLines < "$tableData"  # all table
+            
+            #loop over column data to check pk if unique
+            for j in "${!dataLines[@]}";
+            do
+                IFS=':' read -r -a record <<< "${dataLines[$j]}"; # record(row)
+                while [[ ${record[i]} == $value ]]; do
+                    echo "$name is a primary key and must be unique.";
+                    echo ""
+                    read -rp "Enter $name: " value;
+                    validateValue;
+                done
+            done
+        fi
+    }
+
+    #read new column value from user
+    read -rp "Enter $name: " value;
+    validateValue;
+    
     if [[ $i == 0 ]]; then
         newRecord=$value;
     else
