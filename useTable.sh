@@ -2,7 +2,7 @@
 
 # [TO-DO: if no database is entered the check -d Databases/$currDB still pass cause of the dir Databases ]
 
-read -p "Enter Table Name: " tableName;
+read -rp "Enter Table Name: " tableName;
 
 # check if database exists
 if [ -f  "$currDB/$tableName.idb" ] && [ -f  "$currDB/.$tableName.frm" ]; then

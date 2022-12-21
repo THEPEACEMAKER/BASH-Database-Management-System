@@ -1,12 +1,12 @@
 #!/bin/bash
 
-read -p "Enter database name: " newDB;
+read -rp "Enter database name: " newDB;
 
 while ! [[ $newDB =~ ^([a-zA-Z])[a-zA-Z0-9\w_-]*([a-zA-Z0-9])$ ]]; do
     echo "$newDB is not a valid name";
     echo "database names should not have any special characters, spaces, doesn't start with a number or end with a '-' or '_'";
     echo ""
-    read -p "Enter database name: " newDB;
+    read -rp "Enter database name: " newDB;
 done
 
 

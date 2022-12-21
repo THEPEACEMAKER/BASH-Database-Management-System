@@ -2,7 +2,7 @@
 
 # [TO-DO: if no database is entered the check -d Databases/$currDB still pass cause of the dir Databases ]
 
-read -p "Enter Database name: " currDB;
+read -rp "Enter Database name: " currDB;
 
 # check if database exists
 if [[ -d Databases/$currDB ]]

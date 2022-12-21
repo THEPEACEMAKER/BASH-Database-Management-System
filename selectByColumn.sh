@@ -57,7 +57,7 @@ do
     echo "-------$colname $operator ------";
 
     #read new value from user
-    read -p "Enter $colname: " value;
+    read -rp "Enter $colname: " value;
 
     # validate the new value type
     if [[ $colDataType == "number" ]]; then
@@ -66,7 +66,7 @@ do
         	clear -x;
             echo "$colname must be a number.";
             echo ""
-            read -p "Enter $colname: " value;
+            read -rp "Enter $colname: " value;
         done
     elif [[ $colDataType == "string" ]]; then
         while ! [[ $value =~ ^[a-zA-Z]+$ ]]; do
@@ -74,7 +74,7 @@ do
         	echo "";
             echo "$colname must be a string.";
             echo ""
-            read -p "Enter $colname: " value;
+            read -rp "Enter $colname: " value;
         done
     fi
 

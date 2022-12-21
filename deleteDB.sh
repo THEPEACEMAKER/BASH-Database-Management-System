@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p "Enter Database name: " databaseName;
+read -rp "Enter Database name: " databaseName;
 
 if [ -d  "Databases/$databaseName" ]; then
     rm -r Databases/$databaseName

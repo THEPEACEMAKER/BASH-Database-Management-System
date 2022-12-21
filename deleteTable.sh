@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p "Enter Table Name: " TableName;
+read -rp "Enter Table Name: " TableName;
 
 if [ -f  "$currDB/$TableName.idb" ] && [ -f  "$currDB/.$TableName.frm" ]; then
     rm -r $currDB/$TableName.idb

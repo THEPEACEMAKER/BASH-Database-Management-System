@@ -2,14 +2,14 @@
 
 # [TO-DO: use only one validation function ]
 
-read -p "Enter table name: " tableName;
+read -rp "Enter table name: " tableName;
 
 # Validate the entered name
 while ! [[ $tableName =~ ^([a-zA-Z])[a-zA-Z0-9\w_-]*([a-zA-Z0-9])$ ]]; do
     echo "$tableName is not a valid name";
     echo "table names should not have any special characters, spaces, doesn't start with a number or end with a '-' or '_'";
     echo ""
-    read -p "Enter table name: " tableName;
+    read -rp "Enter table name: " tableName;
 done
 
 function createTableFiles(){
@@ -40,26 +40,26 @@ function createColumns(){
 	currDB=$1;
     tableName=$2;
 
-    read -p "Enter number of columns: " numCols;
+    read -rp "Enter number of columns: " numCols;
 
     for (( i=0; i<$numCols; i++ ))
     do
         colMetadata="";
-        read -p "Enter column name: " colName;
+        read -rp "Enter column name: " colName;
 
         # Validate the entered column name
         while ! [[ $colName =~ ^([a-zA-Z])[a-zA-Z0-9\w_-]*([a-zA-Z0-9])$ ]]; do
             echo "$colName is not a valid name";
             echo "column names should not have any special characters, spaces, doesn't start with a number or end with a '-' or '_'";
             echo ""
-            read -p "Enter column name: " colName;
+            read -rp "Enter column name: " colName;
         done
 
         colMetadata="$colName";
 
         # select column datatype (string, number)
         while [ true ]; do
-            read -p "Choose column's datatype String(s) Number(n): (s/n)" colDataType;
+            read -rp "Choose column's datatype String(s) Number(n): (s/n)" colDataType;
             case "$colDataType" in
                 "s" | "S" ) colMetadata="$colMetadata:string"
                             break;;
@@ -71,7 +71,7 @@ function createColumns(){
 
         # Is it Primary-Key (PK): (y/n):
         while [ true ]; do
-            read -p "Is it Primary-Key (PK): (y/n)" pk;
+            read -rp "Is it Primary-Key (PK): (y/n)" pk;
             case "$pk" in
                 "y" | "Y" ) colMetadata="$colMetadata:yes"
                             break;;

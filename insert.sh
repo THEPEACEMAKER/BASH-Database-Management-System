@@ -21,20 +21,20 @@ do
     PK=${column[2]};
 
     #read new column value from user
-    read -p "Enter $name: " value;
+    read -rp "Enter $name: " value;
     
     # validate the new value type
     if [[ $dataType == "number" ]]; then
         while ! [[ $value =~ ^[0-9]+$ ]]; do
             echo "$name must be a number.";
             echo ""
-            read -p "Enter $name: " value;
+            read -rp "Enter $name: " value;
         done
     elif [[ $dataType == "string" ]]; then
         while ! [[ $value =~ ^[a-zA-Z]+$ ]]; do
             echo "$name must be a string.";
             echo ""
-            read -p "Enter $name: " value;
+            read -rp "Enter $name: " value;
         done
     fi
 
@@ -50,7 +50,7 @@ do
             while [[ ${record[i]} == $value ]]; do
                 echo "$name is a primary key and must be unique.";
                 echo ""
-                read -p "Enter $name: " value;
+                read -rp "Enter $name: " value;
             done
         done
     fi
