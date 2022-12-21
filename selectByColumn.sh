@@ -28,55 +28,64 @@ echo "---------------------------------------------";
 echo "------Columns in the $tableName table--------";
 
 # show columnNames as options
-select column in ${columns[@]};
-do
-    let colIndex=($REPLY)
-    colname="${columns[$((colIndex-1))]}"
-    colDataType="${dataTypes[$((colIndex-1))]}"
+while [ true ]; do
+    select column in ${columns[@]};
+    do
+        if [[ "\?" =~ "${column}" ]]; then # valid option
+            echo "You need to choose one of the options";
+            continue 2;
+        fi
 
-    clear -x;
-    echo "-------------";
-    echo "Column: $column, Data Type: $colDataType"
+        let colIndex=($REPLY)
+        colname="${columns[$((colIndex-1))]}"
+        colDataType="${dataTypes[$((colIndex-1))]}"
 
-    operator="";
-    operatorOptions=("==" "<" ">" "<=" ">=");
+        clear -x;
+        echo "-------------";
+        echo "Column: $column, Data Type: $colDataType"
 
-    while [ true ]; do
-        select option in "${operatorOptions[@]}"
-        do
-        	if ! [[ "\?" =~ "${option}" ]]; then # valid option
-        	    operator=$option;
-        	    break 2;
-        	else 	# # not a valid option
-        		echo "You need to choose one of the options";
-        	fi
+        operator="";
+        operatorOptions=("==" "<" ">" "<=" ">=");
+
+        while [ true ]; do
+            select option in "${operatorOptions[@]}"
+            do
+            	if ! [[ "\?" =~ "${option}" ]]; then # valid option
+            	    operator=$option;
+            	    break 2;
+            	else 	# # not a valid option
+            		echo "You need to choose one of the options";
+            	fi
+            done
         done
+
+        clear -x;
+        echo "-------$colname $operator ------";
+
+        #read new value from user
+        read -rp "Enter $colname: " value;
+
+        # validate the new value type
+        if [[ $colDataType == "number" ]]; then
+            while ! [[ $value =~ ^[0-9]+$ ]]; do
+            	echo "";
+            	clear -x;
+                echo "$colname must be a number.";
+                echo ""
+                read -rp "Enter $colname: " value;
+            done
+        elif [[ $colDataType == "string" ]]; then
+            while ! [[ $value =~ ^[a-zA-Z]+$ ]]; do
+            	clear -x;
+            	echo "";
+                echo "$colname must be a string.";
+                echo ""
+                read -rp "Enter $colname: " value;
+            done
+        fi
+	   break 2;
     done
-
-    clear -x;
-    echo "-------$colname $operator ------";
-
-    #read new value from user
-    read -rp "Enter $colname: " value;
-
-    # validate the new value type
-    if [[ $colDataType == "number" ]]; then
-        while ! [[ $value =~ ^[0-9]+$ ]]; do
-        	echo "";
-        	clear -x;
-            echo "$colname must be a number.";
-            echo ""
-            read -rp "Enter $colname: " value;
-        done
-    elif [[ $colDataType == "string" ]]; then
-        while ! [[ $value =~ ^[a-zA-Z]+$ ]]; do
-        	clear -x;
-        	echo "";
-            echo "$colname must be a string.";
-            echo ""
-            read -rp "Enter $colname: " value;
-        done
-    fi
+done
 
     clear -x;
 	echo "-----------query Results----------"; # display the rows that have the queried value
@@ -97,8 +106,6 @@ do
     	awk -v i="$colIndex" -v v=$value -F':' '{if ($i >= v) print $0;}' $tableData;
     fi
 
-	break;
-done
 
 echo "";
 echo "";
