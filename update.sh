@@ -1,5 +1,7 @@
 #!/bin/bash
 
+clear -x;
+
 echo "-------$tableName-------";
 echo "-------- Update ----------";
 
