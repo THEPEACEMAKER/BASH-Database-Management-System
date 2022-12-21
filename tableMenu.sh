@@ -12,7 +12,7 @@ do
         "Insert") . ./insert.sh;;
         "Select") . ./select.sh;;
         "Update") . ./update.sh;;
-        "Delete") echo "Delete";;
+        "Delete") . ./delete.sh;;
         "Return To Previous Menu") . ./tablesMenu.sh;;
         *) echo "Invalid option $REPLY";;
     esac
