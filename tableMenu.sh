@@ -11,7 +11,7 @@ do
         "Display Table") . ./displayTable.sh;;
         "Insert") . ./insert.sh;;
         "Select") . ./select.sh;;
-        "Update") echo "Update";;
+        "Update") . ./update.sh;;
         "Delete") echo "Delete";;
         "Return To Previous Menu") . ./tablesMenu.sh;;
         *) echo "Invalid option $REPLY";;
