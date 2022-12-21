@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DBsDir="$(PWD)/Databases"
+DBsDir="./Databases"
 if [ -d "$DBsDir" ] && [ "$(ls -A $DBsDir)" ]; then
    echo "Available Databases"
   ls $DBsDir

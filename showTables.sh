@@ -2,7 +2,7 @@
 
 # currDB="Databases/iti" 	# for easy access
 
-DIR="$(PWD)/$currDB"
+DIR="./$currDB"
 if [ -d "$DIR" ] && [ "$(ls -A $DIR)" ]; then
    echo "Available tables"
   ls $DIR | awk 'BEGIN{FS="."}{ print $1 }'
