@@ -101,22 +101,22 @@ while [ true ]; do
     #read new value from user
     function validateValue(){
         # validate the new value type
-        if [[ $dataType == "number" ]]; then
+        if [[ $colDataType == "number" ]]; then
             while ! [[ $updateColValue =~ ^[0-9]+$ ]]; do
-                echo "$name must be a number.";
+                echo "$colname must be a number.";
                 echo ""
-                read -rp "Enter $name: " updateColValue;
+                read -rp "Enter $colname: " updateColValue;
             done
-        elif [[ $dataType == "string" ]]; then
+        elif [[ $colDataType == "string" ]]; then
             while ! [[ $updateColValue =~ ^[a-zA-Z]+$ ]]; do
-                echo "$name must be a string.";
+                echo "$colname must be a string.";
                 echo ""
-                read -rp "Enter $name: " updateColValue;
+                read -rp "Enter $colname: " updateColValue;
             done
         fi
 
         # validate if PK
-        if [[ $PK == "yes" ]]; then
+        if [[ $colPK == "yes" ]]; then
             # get all column data from tableData
             read -d '' -r -a dataLines < "$tableData"  # all table
             
@@ -124,10 +124,10 @@ while [ true ]; do
             for j in "${!dataLines[@]}";
             do
                 IFS=':' read -r -a record <<< "${dataLines[$j]}"; # record(row)
-                while [[ ${record[i]} == $updateColValue ]]; do
-                    echo "$name is a primary key and must be unique.";
+                while [[ ${record[$((updateColIndex-1))]} == $updateColValue ]]; do
+                    echo "$colname is a primary key and must be unique.";
                     echo ""
-                    read -rp "Enter $name: " updateColValue;
+                    read -rp "Enter $colname: " updateColValue;
                     validateValue;
                 done
             done
@@ -135,7 +135,7 @@ while [ true ]; do
     }
 
     #read new column value from user
-    read -rp "Enter $name: " updateColValue;
+    read -rp "Enter $colname: " updateColValue;
     validateValue;
 
     break 2;
