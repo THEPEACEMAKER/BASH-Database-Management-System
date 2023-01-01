@@ -42,6 +42,13 @@ function createColumns(){
 
     read -rp "Enter number of columns: " numCols;
 
+    # Validate the entered col num
+    while ! [[ $numCols =~ ^[0-9]+$ ]]; do
+        echo "$numCols is not a valid number";
+        echo ""
+        read -rp "Enter number of columns: " numCols;
+    done
+
     for (( i=0; i<$numCols; i++ ))
     do
         colMetadata="";
