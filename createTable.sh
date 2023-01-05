@@ -2,6 +2,7 @@
 
 # [TO-DO: use only one validation function ]
 
+clear -x;
 read -rp "Enter table name: " tableName;
 
 # Validate the entered name

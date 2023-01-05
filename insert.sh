@@ -68,6 +68,7 @@ done
 
 if ! [[ $newRecord == "" ]]; then
     if echo $newRecord >> "$tableData"; then
+        clear -x;
         echo "Record stored succesfully.";
     else
         echo "ERROR: Failed to store record.";

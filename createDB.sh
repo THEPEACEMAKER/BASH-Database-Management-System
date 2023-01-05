@@ -1,5 +1,6 @@
 #!/bin/bash
 
+clear -x;
 read -rp "Enter database name: " newDB;
 
 while ! [[ $newDB =~ ^([a-zA-Z])[a-zA-Z0-9\w_-]*([a-zA-Z0-9])$ ]]; do

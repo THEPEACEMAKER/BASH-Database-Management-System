@@ -82,14 +82,14 @@ while [ true ]; do
 done
 
 clear -x;
-echo "------------ UPDATE $tableName set $colname = $updateColValue where $queryColumnName = $value ------------";
+echo "------------ DELETE FROM $tableName WHERE $colname = $value ------------";
 echo "$(awk -v i="$colIndex" -v v=$value -F':' 'BEGIN{OFS=FS}{if ($i != v) print $0;}' $tableData)" 1> $tableData
 echo "------------ is run successfully ------------";
 
 echo "";
 echo "";
 echo "------------------------";
-options=("Update Another Column" "Return To The Update Menu" "Return To The Table Menu");
+options=("Delete Another Column" "Return To The Delete Menu" "Return To The Table Menu");
 
 select option in "${options[@]}"
 do

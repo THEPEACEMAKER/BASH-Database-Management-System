@@ -4,6 +4,7 @@
 # currDB="Databases/iti"
 # tableName="emp";
 
+clear -x;
 tableData="$currDB/$tableName.idb"
 tableFormat="$currDB/.$tableName.frm"
 

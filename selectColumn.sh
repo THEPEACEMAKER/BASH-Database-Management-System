@@ -4,6 +4,7 @@
 # currDB="Databases/iti"
 # tableName="emp";
 
+clear -x;
 tableData="$currDB/$tableName.idb"
 tableFormat="$currDB/.$tableName.frm"
 
@@ -21,6 +22,7 @@ done
 # show columnNames as options
 select column in ${columns[@]};
 do
+    clear -x;
     echo "Selected column: $column"
     let colIndex=($REPLY)
 

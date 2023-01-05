@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # currDB="Databases/iti" 	# for easy access
+clear -x;
+echo "------------ SHOW TABLES ------------";
 
 DIR="./$currDB"
 if [ -d "$DIR" ] && [ "$(ls -A $DIR)" ]; then
